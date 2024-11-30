@@ -1,7 +1,23 @@
 package main
 
-import "fmt"
+import (
+	"os"
+)
+
+type Task struct {
+	name        string
+	description string
+	importance  int
+	id          uint16
+	isCompleted bool
+}
 
 func main() {
-	fmt.Println("Hello World!")
+
+	args := os.Args
+
+	for i := range args {
+
+	}
+
 }
