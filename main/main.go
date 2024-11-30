@@ -6,11 +6,6 @@ import (
 	"os"
 )
 
-type Task struct {
-	name        string
-	isCompleted bool
-}
-
 // removes the first argument (element) of a slice
 func removeFirstArg(args []string) ([]string, error) {
 	if len(args) > 1 {
@@ -29,20 +24,20 @@ var commands = map[int]string{
 }
 
 func validateCommand(args []string) (int, error) {
-	if len(args) >= 1 {
-		switch args[0] {
-		case "add":
-			return 1, nil
-		case "remove":
-			return 2, nil
-		case "list":
-			return 3, nil
-		case "change":
-			return 4, nil
+	fmt.Printf("commands[0]: %v\n", commands[0])
+	fmt.Printf("commands[1]: %v\n", commands[1])
+
+	fmt.Printf("args: %v\n", args)
+
+	if len(args) > 0 {
+		for key, value := range commands {
+			if args[0] == value {
+				return key, nil
+			}
 		}
 	}
 
-	return -1, errors.New("validateCommands expect an array of strings, but an empty one was given")
+	return -1, errors.New("at least one argument is expected, but none were given")
 }
 
 // global slice to store tasks
@@ -52,6 +47,14 @@ const MAX_TASKS int = 10
 
 // adds a task to the tasks slice
 func addTask(args []string) {
+
+	// file, err := os.Open("data.JSON")
+
+	// if err != nil {
+	// 	err.Error("could not open the data.JSON file")
+	// }
+
+	test()
 
 	if len(args) >= MAX_TASKS {
 		fmt.Println("The task list is full! Cannot add more tasks.")
@@ -64,9 +67,9 @@ func addTask(args []string) {
 	}
 
 	// creates a new task and appends it to the slice
-	task := Task{name: args[1], isCompleted: false}
-	tasks = append(tasks, task)
-	fmt.Printf("Task \"%v\" added to the tasklist.\n", task.name)
+	// task := Task{name: args[1], isCompleted: false}
+	// tasks = append(tasks, task)
+	// fmt.Printf("Task \"%v\" added to the tasklist.\n", task.name)
 }
 
 func listTasks() {
@@ -93,11 +96,13 @@ func main() {
 
 	commandId, _ := validateCommand(args)
 
-	switch commandId {
-	case 1:
-		addTask(args)
-	case 3:
-		listTasks()
-	}
+	fmt.Printf("commandId: %v\n", commandId)
+
+	// switch commandId {
+	// case 1:
+	// 	addTask(args)
+	// case 3:
+	// 	listTasks()
+	// }
 
 }
